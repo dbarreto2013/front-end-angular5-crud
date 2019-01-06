@@ -14,7 +14,7 @@ Ter instalado o npm 6.x.x.
 
 Executar o comando `ng serve` de dentro do diretório do projeto. 
 
-E acessar via browser a url `http://localhost:8080/`.
+E acessar via browser a url `http://localhost:4200/`.
 
 ## Eventuais dúvidas
 

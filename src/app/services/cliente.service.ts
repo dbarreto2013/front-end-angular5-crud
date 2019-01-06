@@ -12,18 +12,18 @@ export class ClienteService {
 	constructor(private http: HttpClient) { }
 
 	getClientes(): Observable<Cliente[]>{
-		return this.http.get<Cliente[]>('http://localhost/cliente/clientes');
+		return this.http.get<Cliente[]>('http://localhost:8080/cliente/clientes');
 	}
 	
 	saveClientes(post: Cliente): Observable<Cliente>{
-    	return this.http.post<Cliente>("http://localhost/cliente/add", post, httpOptions);
+    	return this.http.post<Cliente>("http://localhost:8080/cliente/add", post, httpOptions);
   	}
   	
 	updateClientes(post: Cliente): Observable<Cliente>{
-    	return this.http.put<Cliente>("http://localhost/cliente/"+post.id, post, httpOptions);
+    	return this.http.put<Cliente>("http://localhost:8080/cliente/"+post.id, post, httpOptions);
 	}
 	
 	removeCliente(postId: String):Observable<Cliente>{
-    	return this.http.delete<Cliente>("http://localhost/cliente/delete/"+postId, httpOptions);
+    	return this.http.delete<Cliente>("http://localhost:8080/cliente/delete/"+postId, httpOptions);
 	}
 }

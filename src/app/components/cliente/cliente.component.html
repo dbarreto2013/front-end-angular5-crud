@@ -1,0 +1,103 @@
+<button (click)="showClienteForm = !showClienteForm" class="btn btn-dark mb-3">Novo Cliente</button>
+<div class="card card-body mb-3" *ngIf="showClienteForm">
+  <h2>Cadastrar Cliente</h2>
+  <form #clienteForm="ngForm" (ngSubmit)="onSubmit(clienteForm)">
+    <div class="form-group">
+      <label>Nome</label>
+      <input 
+        [(ngModel)]="cliente.nome"  name="nome" #nome="ngModel"
+        type="text" class="form-control is-invalid" [ngClass]="{'is-invalid': nome.errors && nome.touched}"
+        required minlength="4">
+      <div class="invalid-feedback" [hidden]="!nome.errors?.required">
+        Nome obrigat&oacute;rio
+      </div>
+      <div class="invalid-feedback" [hidden]="!nome.errors?.minlength">
+        Nome obrigat&oacute;rio e deve ter no m&iacute;nimo 4 caracteres
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Limite de Cr&eacute;dito</label>
+      <input [(ngModel)]="cliente.limiteCredito" name="limiteCredito" #limiteCredito="ngModel"
+      type="text" class="form-control" [ngClass]="{'is-invalid': limiteCredito.errors && limiteCredito.touched}"
+      required pattern="^[0-9]\d*$"
+      required minlength="1">
+      <div class="invalid-feedback" [hidden]="!limiteCredito.errors?.required">
+        Limite de Cr&eacute;dito obrigat&oacute;rio
+      </div>
+      <div class="invalid-feedback" [hidden]="!limiteCredito.errors?.minlength">
+        Limite de Cr&eacute;dito obrigat&oacute;rio, deve ter no m&iacute;nimo 1 d&iacute;gito
+      </div>
+	  <div class="invalid-feedback" [hidden]="!limiteCredito.errors?.pattern">
+        Limite de Cr&eacute;dito obrigat&oacute;rio deve conter apenas caracteres num&eacute;ricos
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Risco</label>
+      
+      <select [(ngModel)]="cliente.risco" name="risco">
+	    <option value="null" selected>A</option>
+	    <option value="10">B</option>
+	    <option value="20">C</option>
+	  </select>
+    </div>
+    <button type="submit" [disabled]="clienteForm.form.invalid" [ngClass]="currentClasses" class="btn btn-block mb-3">Add Cliente</button>
+    
+  </form>
+</div>
+
+<ul class="list-unstyled" *ngIf="loaded && clientes?.length > 0">
+  <li *ngFor="let cliente of clientes">
+  	<div *ngIf="cliente != null" class="card card-body mb-2">
+		<h2 [ngStyle]="currentStyles">Cliente: {{cliente.nome}}</h2>
+		<button (click)="cliente.edicao = !cliente.edicao" class="btn btn-dark mb-3">Editar Cliente</button>
+        <div class="card card-body mb-3" *ngIf="cliente.edicao">
+
+	    <div class="form-group">
+	      <label>Nome</label>
+	      <input 
+	        [(ngModel)]="cliente.nome"  name="nomeEdit" #nomeEdit
+	        type="text" class="form-control is-invalid" [ngClass]="{'is-invalid': nomeEdit.errors && nomeEdit.touched}"
+	        required minlength="4">
+	      <div class="invalid-feedback" [hidden]="!nomeEdit.errors?.required">
+	        Nome obrigat&oacute;rio
+	      </div>
+	      <div class="invalid-feedback" [hidden]="!nomeEdit.errors?.minlength">
+	        Nome obrigat&oacute;rio e deve ter no m&iacute;nimo 4 caracteres
+	      </div>
+	    </div>
+	    <div class="form-group">
+	      <label>Limite de Cr&eacute;dito</label>
+	      <input [(ngModel)]="cliente.limiteCredito" name="limiteCreditoEdit" #limiteCreditoEdit
+	      type="text" class="form-control" [ngClass]="{'is-invalid': limiteCreditoEdit.errors && limiteCreditoEdit.touched}"
+	      required pattern="^[0-9]\d*$"
+	      required minlength="1">
+	      <div class="invalid-feedback" [hidden]="!limiteCreditoEdit.errors?.required">
+	        Limite de Cr&eacute;dito obrigat&oacute;rio obrigatório
+	      </div>
+	      <div class="invalid-feedback" [hidden]="!limiteCreditoEdit.errors?.minlength">
+	        Limite de Cr&eacute;dito obrigat&oacute;rio, deve ter no m&iacute;nimo 1 d&iacute;gito
+	      </div>
+		  <div class="invalid-feedback" [hidden]="!limiteCreditoEdit.errors?.pattern">
+	        Limite de Cr&eacute;dito obrigat&oacute;rio deve conter apenas caracteres num&eacute;ricos
+	      </div>
+	    </div>
+	    <div class="form-group">
+	      <label>Risco</label>
+	      <select [(ngModel)]="cliente.risco" name="riscoEdit" #riscoEdit>
+		    <option value="null" selected>A</option>
+		    <option value="10">B</option>
+		    <option value="20">C</option>
+		  </select>
+	    </div>
+		<input [(ngModel)]="cliente.id" type="hidden" name="id" #id>
+		<small>
+			<button (click)="removeCliente(id.value)" class="btn btn-danger btn-block">Remover</button>
+			<button (click)="alterarCliente(id.value, nomeEdit.value, limiteCreditoEdit.value, riscoEdit.value)" class="btn btn-dark btn-block">Alterar</button>
+		</small>
+        </div>
+     </div>
+  </li>
+</ul>
+<h4 *ngIf="clientes?.length === 0">Nenhum Cliente Cadastrado</h4>
+<h4 *ngIf="!loaded">Carregando clientes...</h4>
+

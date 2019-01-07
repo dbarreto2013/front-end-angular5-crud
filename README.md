@@ -14,7 +14,9 @@ Ter instalado o npm 6.x.x.
 
 Executar o comando `npm install` de dentro do diretório do projeto.
 
-Executar o comando `ng serve` de dentro do diretório do projeto. 
+Executar o comando `ng serve` de dentro do diretório do projeto.
+
+Se falhar por não ter o angular-cli instalado, execute a instalação com o comando `npm install -g @angular/cli`
 
 E acessar via browser a url `http://localhost:4200/`.
 
